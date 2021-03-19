@@ -9,10 +9,8 @@ import (
 
 type (
 	Logger        = log.Logger
-	IOWriter      = log.IOWriter
 	FileWriter    = log.FileWriter
 	MultiWriter   = log.MultiWriter
-	AsyncWriter   = log.AsyncWriter
 	ConsoleWriter = log.ConsoleWriter
 	Entry         = log.Entry
 )
@@ -21,13 +19,29 @@ const (
 	DEFAULT_LOGFILE = "logs/log.log"
 )
 
+var (
+	DefaultFileWriter = FileWriter{
+		FileMode:     0644,
+		MaxSize:      500 * 1024 * 1024,
+		EnsureFolder: true,
+		LocalTime:    true,
+		MaxBackups:   90,
+		TimeFormat:   "2006-01-02",
+	}
+	DefaultConsoleJson  = log.IOWriter{os.Stdout}
+	DefaultConsoleColor = ConsoleWriter{
+		ColorOutput:    true,
+		EndWithMessage: true,
+	}
+)
+
 func init() {
-	log.DefaultLogger = GetLogger(DebugLevel)
+	SetDefaultlogger(GetLogger(DebugLevel))
 }
 
 // for set logger default
-func GetDefaultlogger() *Logger {
-	return &log.DefaultLogger
+func SetDefaultlogger(setLogger Logger) {
+	log.DefaultLogger = setLogger
 }
 
 // console log with text format
@@ -35,10 +49,7 @@ func GetLogger(logLevel Level) Logger {
 	return Logger{
 		Level:  DebugLevel,
 		Caller: 1,
-		Writer: &ConsoleWriter{
-			ColorOutput:    true,
-			EndWithMessage: true,
-		},
+		Writer: &DefaultConsoleColor,
 	}
 }
 
@@ -48,7 +59,7 @@ func GetLoggerJson(logLevel Level) Logger {
 		Level:     DebugLevel,
 		Caller:    1,
 		TimeField: "timestamp",
-		Writer:    &IOWriter{os.Stdout},
+		Writer:    &DefaultConsoleJson,
 	}
 }
 
@@ -60,15 +71,10 @@ func GetLoggerFile(filelogName string, logLevel Level) Logger {
 		os.Exit(1)
 	}
 	log.Debug().Msgf("logfile: %s", filelogName)
+	DefaultFileWriter.Filename = filelogName
 	logger := Logger{
-		Level: logLevel,
-		Writer: &FileWriter{
-			Filename:     filelogName,
-			FileMode:     0644,
-			MaxSize:      500 * 1024 * 1024,
-			EnsureFolder: true,
-			LocalTime:    true,
-		},
+		Level:  logLevel,
+		Writer: &DefaultFileWriter,
 	}
 	return logger
 }
@@ -80,18 +86,13 @@ func GetLoggerFileAndConsole(filelogName string, logLevel Level) Logger {
 		log.Fatal().Err(er)
 		os.Exit(1)
 	}
-	log.Debug().Msgf("logfile: %s", filelogName)
+	Debug().Msgf("logfile: %s", filelogName)
+	DefaultFileWriter.Filename = filelogName
 	logger := Logger{
 		Level: logLevel,
 		Writer: &MultiWriter{
-			InfoWriter: &FileWriter{
-				Filename:     filelogName,
-				FileMode:     0644,
-				MaxSize:      500 * 1024 * 1024,
-				EnsureFolder: true,
-				LocalTime:    true,
-			},
-			ConsoleWriter: &log.ConsoleWriter{ColorOutput: true},
+			InfoWriter:    &DefaultFileWriter,
+			ConsoleWriter: &DefaultConsoleJson,
 			ConsoleLevel:  logLevel,
 		},
 	}
