@@ -52,7 +52,7 @@ import (
 
 	jwt "github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"gitlab.com/indev-moph/go-pkg/fiber-middleware/keycloakware"
+	"github.com/indev-moph/go-pkg/fiber-middleware/keycloakware"
 )
 
 func main() {

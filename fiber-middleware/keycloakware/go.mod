@@ -1,4 +1,4 @@
-module gitlab.com/indev-moph/go-pkg/fiber-middleware/keycloakware
+module github.com/indev-moph/go-pkg/fiber-middleware/keycloakware
 
 go 1.15
 
