@@ -1,0 +1,6 @@
+github.com/attapon-th/go-pkg/logger v0.0.0-20210319070143-9237ea4e15f2 h1:3wS2IrTz+ZvkowWePb5stGh4uqNqnzclnSGqYUYEGUA=
+github.com/attapon-th/go-pkg/logger v0.0.0-20210319070143-9237ea4e15f2/go.mod h1:srxEMvQAbUX+BqJJts+SabdFDBJ/mHz92FDGv/0hl8Q=
+github.com/phuslu/log v1.0.70 h1:6GTxfDTAtOG8hj6iKZ+1iLLNTq2XJ3vwgOavf+3FwHk=
+github.com/phuslu/log v1.0.70/go.mod h1:kzJN3LRifrepxThMjufQwS7S35yFAB+jAV1qgA7eBW4=
+github.com/robfig/cron/v3 v3.0.1 h1:WdRxkvbJztn8LMz/QEvLN5sBU+xKpSqwwUO1Pjr4qDs=
+github.com/robfig/cron/v3 v3.0.1/go.mod h1:eQICP3HwyT7UooqI/z+Ov+PtYAWygg1TEWWzGIFLtro=

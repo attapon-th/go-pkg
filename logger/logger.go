@@ -72,3 +72,28 @@ func GetLoggerFile(filelogName string, logLevel Level) Logger {
 	}
 	return logger
 }
+
+// log file with json format
+func GetLoggerFileAndConsole(filelogName string, logLevel Level) Logger {
+	er := os.MkdirAll(filepath.Dir(filelogName), 0755)
+	if er != nil {
+		log.Fatal().Err(er)
+		os.Exit(1)
+	}
+	log.Debug().Msgf("logfile: %s", filelogName)
+	logger := Logger{
+		Level: logLevel,
+		Writer: &MultiWriter{
+			InfoWriter: &FileWriter{
+				Filename:     filelogName,
+				FileMode:     0644,
+				MaxSize:      500 * 1024 * 1024,
+				EnsureFolder: true,
+				LocalTime:    true,
+			},
+			ConsoleWriter: &log.ConsoleWriter{ColorOutput: true},
+			ConsoleLevel:  logLevel,
+		},
+	}
+	return logger
+}
