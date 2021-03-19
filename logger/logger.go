@@ -22,10 +22,10 @@ const (
 var (
 	DefaultFileWriter = FileWriter{
 		FileMode:     0644,
-		MaxSize:      500 * 1024 * 1024,
+		MaxSize:      1000 * 1024 * 1024, // 1000MB
 		EnsureFolder: true,
 		LocalTime:    true,
-		MaxBackups:   90,
+		MaxBackups:   90, // 90 day
 		TimeFormat:   "2006-01-02",
 	}
 	DefaultConsoleJson  = log.IOWriter{os.Stdout}
