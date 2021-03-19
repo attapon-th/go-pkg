@@ -20,11 +20,15 @@ This middleware supports Fiber v2, install accordingly.
 ```
 go get -u github.com/attapon-th/go-pkg/fiber-middleware/keycloakware
 ```
+**Or**
+```go
+import "github.com/attapon-th/go-pkg/fiber-middleware/keycloakware"
+```
 
 ### Signature
 ```go
 //  auth with Header `Authorization: Bearer <token>`
-keycloakware.NewWithHeaderBearer(config keycloakware.Config) func(*fiber.Ctx) error
+keycloakware.New(config keycloakware.Config) func(*fiber.Ctx) error
 ```
 
 ### Config
