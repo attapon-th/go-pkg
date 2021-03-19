@@ -21,6 +21,7 @@
   - [https://watermill.io/docs/getting-started/](https://watermill.io/docs/getting-started/) - for sub/pub realtime 
 - logger
   - [https://github.com/phuslu/log](https://github.com/phuslu/log)
+  - [logger](/logger) - My Logger
 - Config
   - [github.com/spf13/viper](https://github.com/spf13/viper) - config and cli
 
