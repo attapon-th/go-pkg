@@ -18,7 +18,7 @@ For missing token, it returns "400 - Bad Request" error.
 This middleware supports Fiber v2, install accordingly.
 
 ```
-go get -u gitlab.com/indev-moph/go-pkg/fiber-middleware/keycloakware
+go get -u github.com/attapon-th/go-pkg/fiber-middleware/keycloakware
 ```
 
 ### Signature

@@ -1,4 +1,4 @@
-module github.com/indev-moph/go-pkg/fiber-middleware/keycloakware
+module github.com/attapon-th/go-pkg/fiber-middleware/keycloakware
 
 go 1.15
 

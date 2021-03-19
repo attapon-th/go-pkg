@@ -67,7 +67,7 @@ type Config struct {
 	AuthScheme string
 }
 
-func NewWithHeaderBearer(config Config) fiber.Handler {
+func New(config Config) fiber.Handler {
 	if config.BaseInstant == "" || config.RealmName == "" {
 		panic(fmt.Errorf("Config is not empty. %v", config))
 	}
