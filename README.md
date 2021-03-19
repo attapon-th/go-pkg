@@ -1,4 +1,4 @@
-# Golang Pakage
+# Golang Package
 
 > `github.com/attapon-th/go-pkg`
 
