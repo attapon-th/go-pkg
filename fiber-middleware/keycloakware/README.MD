@@ -56,7 +56,7 @@ import (
 
 	jwt "github.com/form3tech-oss/jwt-go"
 	"github.com/gofiber/fiber/v2"
-	"github.com/indev-moph/go-pkg/fiber-middleware/keycloakware"
+	"github.com/attapon-th/go-pkg/fiber-middleware/keycloakware"
 )
 
 func main() {
@@ -65,7 +65,7 @@ func main() {
 	// Login route
 
 	// JWT Keycloak Middleware
-	app.Use("/valid", keycloakware.NewWithHeaderBearer(keycloakware.Config{
+	app.Use("/valid", keycloakware.New(keycloakware.Config{
 		BaseInstant:   "https://localhost:8000/auth",
 		RealmName:     "master", 
 		SigningMethod: "RS512", // fix method
