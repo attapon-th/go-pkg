@@ -7,20 +7,12 @@ import (
 	"github.com/phuslu/log"
 )
 
-type (
-	Logger        = log.Logger
-	FileWriter    = log.FileWriter
-	MultiWriter   = log.MultiWriter
-	ConsoleWriter = log.ConsoleWriter
-	Entry         = log.Entry
-)
-
 const (
 	DEFAULT_LOGFILE = "logs/log.log"
 )
 
 var (
-	DefaultFileWriter = FileWriter{
+	DefaultFileWriter = log.FileWriter{
 		FileMode:     0644,
 		MaxSize:      1000 * 1024 * 1024, // 1000MB
 		EnsureFolder: true,
@@ -29,34 +21,30 @@ var (
 		TimeFormat:   "2006-01-02",
 	}
 	DefaultConsoleJson  = log.IOWriter{os.Stdout}
-	DefaultConsoleColor = ConsoleWriter{
+	DefaultConsoleColor = log.ConsoleWriter{
 		ColorOutput:    true,
 		EndWithMessage: true,
 	}
 )
 
-func init() {
-	SetDefaultlogger(GetLogger(DebugLevel))
-}
-
-// for set logger default
-func SetDefaultlogger(setLogger Logger) {
+// for set log.Logger default
+func SetDefaultlogger(setLogger log.Logger) {
 	log.DefaultLogger = setLogger
 }
 
 // console log with text format
-func GetLogger(logLevel Level) Logger {
-	return Logger{
-		Level:  DebugLevel,
+func GetLogger(logLevel log.Level) log.Logger {
+	return log.Logger{
+		Level:  log.DebugLevel,
 		Caller: 1,
 		Writer: &DefaultConsoleColor,
 	}
 }
 
 // console log with json format
-func GetLoggerJson(logLevel Level) Logger {
+func GetLoggerJson(logLevel log.Level) log.Logger {
 	return log.Logger{
-		Level:     DebugLevel,
+		Level:     log.DebugLevel,
 		Caller:    1,
 		TimeField: "timestamp",
 		Writer:    &DefaultConsoleJson,
@@ -64,7 +52,7 @@ func GetLoggerJson(logLevel Level) Logger {
 }
 
 // log file with json format
-func GetLoggerFile(filelogName string, logLevel Level) Logger {
+func GetLoggerFile(filelogName string, logLevel log.Level) log.Logger {
 	er := os.MkdirAll(filepath.Dir(filelogName), 0755)
 	if er != nil {
 		log.Fatal().Err(er)
@@ -72,7 +60,7 @@ func GetLoggerFile(filelogName string, logLevel Level) Logger {
 	}
 	log.Debug().Msgf("logfile: %s", filelogName)
 	DefaultFileWriter.Filename = filelogName
-	logger := Logger{
+	logger := log.Logger{
 		Level:  logLevel,
 		Writer: &DefaultFileWriter,
 	}
@@ -80,17 +68,17 @@ func GetLoggerFile(filelogName string, logLevel Level) Logger {
 }
 
 // log file with json format
-func GetLoggerFileAndConsole(filelogName string, logLevel Level) Logger {
+func GetLoggerFileAndConsole(filelogName string, logLevel log.Level) log.Logger {
 	er := os.MkdirAll(filepath.Dir(filelogName), 0755)
 	if er != nil {
 		log.Fatal().Err(er)
 		os.Exit(1)
 	}
-	Debug().Msgf("logfile: %s", filelogName)
+	log.Debug().Msgf("logfile: %s", filelogName)
 	DefaultFileWriter.Filename = filelogName
-	logger := Logger{
+	logger := log.Logger{
 		Level: logLevel,
-		Writer: &MultiWriter{
+		Writer: &log.MultiWriter{
 			InfoWriter:    &DefaultFileWriter,
 			ConsoleWriter: &DefaultConsoleJson,
 			ConsoleLevel:  logLevel,
