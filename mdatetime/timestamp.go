@@ -18,7 +18,7 @@ func (m *Mtimestamp) UnmarshalJSON(b []byte) error {
 	if InLocalTimeZone {
 		tt, err = time.ParseInLocation(TimestampMillisLayout, string(b), time.Local)
 	} else {
-		tt, err = time.ParseInLocation(TimestampMillisLayout, string(b), time.Local)
+		tt, err = time.Parse(TimestampMillisLayout, string(b))
 	}
 	*m = Mtimestamp(tt)
 	return err
@@ -41,4 +41,8 @@ func (t Mtimestamp) GetBSON() (interface{}, error) {
 // SetBSON customizes the bson serialization for this type
 func (t *Mtimestamp) SetBSON(raw bson.Raw) error {
 	return t.UnmarshalJSON(raw)
+}
+
+func (t Mtimestamp) GetTime() time.Time {
+	return time.Time(t)
 }

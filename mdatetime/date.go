@@ -24,7 +24,7 @@ func (m *Mdate) UnmarshalJSON(b []byte) error {
 	if InLocalTimeZone {
 		tt, err = time.ParseInLocation(MdateLayout, string(b), time.Local)
 	} else {
-		tt, err = time.ParseInLocation(MdateLayout, string(b), time.Local)
+		tt, err = time.Parse(MdateLayout, string(b))
 	}
 	*m = Mdate(tt)
 	return err
@@ -47,4 +47,8 @@ func (t Mdate) GetBSON() (interface{}, error) {
 // SetBSON customizes the bson serialization for this type
 func (t *Mdate) SetBSON(raw bson.Raw) error {
 	return t.UnmarshalJSON(raw)
+}
+
+func (t Mdate) GetTime() time.Time {
+	return time.Time(t)
 }
