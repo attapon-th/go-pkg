@@ -77,24 +77,20 @@ func New(config Config) fiber.Handler {
 	}
 	keyLen := len(kcConfig.Certs.Keys)
 	if keyLen > 0 {
-		var keys = make(map[string]interface{})
 		for _, certs := range kcConfig.Certs.Keys {
 			pub, err := certs.DecodePublicKey()
-			if *certs.Alg == config.SigningMethod {
-				keys[*certs.Kid] = pub
-				if config.SigningKey == nil {
-					config.SigningKey = pub
-				}
-			}
-
 			if err != nil {
 				panic(err)
 			}
+			if *certs.Alg == config.SigningMethod {
+				config.SigningKey = pub
+				break
+			}
 		}
 		return jwtware.New(jwtware.Config{
-			SigningMethod:  config.SigningMethod,
-			SigningKey:     config.SigningKey,
-			SigningKeys:    keys,
+			SigningMethod: config.SigningMethod,
+			SigningKey:    config.SigningKey,
+			// SigningKeys:    keys.(map[string]interface{}),
 			SuccessHandler: config.SuccessHandler,
 			ErrorHandler:   config.ErrorHandler,
 			TokenLookup:    config.TokenLookup,
