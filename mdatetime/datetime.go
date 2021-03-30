@@ -3,8 +3,6 @@ package mdatetime
 import (
 	"fmt"
 	"time"
-
-	"go.mongodb.org/mongo-driver/bson"
 )
 
 const MdatetimeLayout = "2006-01-02T15:04:05Z"
@@ -32,16 +30,6 @@ func (ct Mdatetime) MarshalJSON() ([]byte, error) {
 func (ct *Mdatetime) String() string {
 	t := time.Time(*ct)
 	return fmt.Sprintf("%q", t.Format(MdatetimeLayout))
-}
-
-// GetBSON customizes the bson serialization for this type
-func (t Mdatetime) GetBSON() (interface{}, error) {
-	return t.String(), nil
-}
-
-// SetBSON customizes the bson serialization for this type
-func (t *Mdatetime) SetBSON(raw bson.Raw) error {
-	return t.UnmarshalJSON(raw)
 }
 
 func (t Mdatetime) GetTime() time.Time {
