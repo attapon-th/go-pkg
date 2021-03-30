@@ -1,6 +1,7 @@
 package mdatetime
 
 import (
+	"fmt"
 	"time"
 
 	"go.mongodb.org/mongo-driver/bson"
@@ -30,7 +31,7 @@ func (ct Mtimestamp) MarshalJSON() ([]byte, error) {
 
 func (ct *Mtimestamp) String() string {
 	t := time.Time(*ct)
-	return t.Format(TimestampMillisLayout)
+	return fmt.Sprintf("%q", t.Format(TimestampMillisLayout))
 }
 
 // GetBSON customizes the bson serialization for this type
