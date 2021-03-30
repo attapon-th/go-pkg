@@ -82,6 +82,9 @@ func New(config Config) fiber.Handler {
 			pub, err := certs.DecodePublicKey()
 			if *certs.Alg == config.SigningMethod {
 				keys[*certs.Kid] = pub
+				if config.SigningKey == nil {
+					config.SigningKey = pub
+				}
 			}
 
 			if err != nil {
