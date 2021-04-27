@@ -77,6 +77,7 @@ func New(config Config) fiber.Handler {
 	}
 	keyLen := len(kcConfig.Certs.Keys)
 	if keyLen > 0 {
+		ok := false
 		for _, certs := range kcConfig.Certs.Keys {
 			pub, err := certs.DecodePublicKey()
 			if err != nil {
@@ -84,8 +85,12 @@ func New(config Config) fiber.Handler {
 			}
 			if *certs.Alg == config.SigningMethod {
 				config.SigningKey = pub
+				ok = true
 				break
 			}
+		}
+		if !ok {
+			panic(fmt.Errorf("Error Create Keycloak middleware"))
 		}
 		return jwtware.New(jwtware.Config{
 			SigningMethod: config.SigningMethod,

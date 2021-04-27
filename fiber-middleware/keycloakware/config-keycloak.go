@@ -19,6 +19,8 @@ type KeycloakConfiguration struct {
 	Realm       string
 	WellKnown   []byte
 	Certs       CertResponse
+	ClientID    string
+	ROLES       []string
 }
 
 func NewKeyCloakConfiguration(baseInstant string, realm string) (kc *KeycloakConfiguration, err error) {
