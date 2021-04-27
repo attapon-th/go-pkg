@@ -20,8 +20,8 @@ func New(cfg Config) {
 	}
 	config = cfg
 	cfg.FiberRouter.Post("/token", EndpointToken)
-	cfg.FiberRouter.Post("/logout", EndpointLogout)
-	cfg.FiberRouter.Post("/userinfo", EndpointUserInfo)
+	cfg.FiberRouter.Get("/logout", EndpointLogout)
+	cfg.FiberRouter.Get("/userinfo", EndpointUserInfo)
 
 }
 
