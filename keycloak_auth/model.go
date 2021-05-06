@@ -3,9 +3,16 @@ package keycloak_auth
 import (
 	"fmt"
 	"strings"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 )
+
+type Cacher interface {
+	Get(key string) (interface{}, bool)
+	Set(key string, value interface{}, Expire time.Duration)
+	Delete(key string)
+}
 
 type Config struct {
 	FiberRouter    fiber.Router
@@ -14,6 +21,8 @@ type Config struct {
 	EndpointURL    EndpointConfig
 	ClientID       string
 	ClientSecret   string
+	CacheToken     Cacher
+	HashKeyFunc    func(b []byte) string
 }
 
 type EndpointConfig struct {
@@ -34,4 +43,14 @@ type GetToken struct {
 	Username string `json:"username" form:"username" query:"username" `
 	Password string `json:"password" form:"password" query:"password"`
 	Scope    string `json:"scope" form:"scope" query:"scope"`
+}
+
+type ResponseToken struct {
+	AccessToken      string `json:"access_token"`
+	ExpiresIn        int    `json:"expires_in"`
+	RefreshExpiresIn int    `json:"refresh_expires_in,omitempty"`
+	RefreshToken     string `json:"refresh_token"`
+	TokenType        string `json:"token_type"`
+	SessionState     string `json:"session_state,omitempty"`
+	Scope            string `json:"scope"`
 }
