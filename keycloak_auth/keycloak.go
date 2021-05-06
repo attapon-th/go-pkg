@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/patrickmn/go-cache"
 )
 
 var (
@@ -25,6 +26,9 @@ func New(cfg Config) {
 	}
 	if cfg.HashKeyFunc == nil {
 		cfg.HashKeyFunc = HashSHA1Func
+	}
+	if cfg.CacheToken == nil {
+		cfg.CacheToken = cache.New(30*time.Minute, 60*time.Minute)
 	}
 	config = cfg
 	cfg.FiberRouter.Post("/token", EndpointToken)
