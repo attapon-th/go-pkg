@@ -1,6 +1,6 @@
 // Thanks to https://github.com/uandiii/go-jwk-security
 
-package jwt
+package keycloak_jwks
 
 import (
 	"errors"
@@ -9,7 +9,7 @@ import (
 	"strings"
 
 	"github.com/attapon-th/go-pkg/keycloak_jwks/security"
-	"github.com/dgrijalva/jwt-go"
+	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"
 )
 
