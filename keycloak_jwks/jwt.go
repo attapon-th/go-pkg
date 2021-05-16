@@ -21,8 +21,7 @@ type Config struct {
 	ErrorHandler   fiber.ErrorHandler
 }
 
-// JwtMiddleware
-func JwtMiddleware(config ...Config) fiber.Handler {
+func New(config ...Config) fiber.Handler {
 	var cfg Config
 	headers := "header:" + fiber.HeaderAuthorization
 	authScheme := "Bearer"
