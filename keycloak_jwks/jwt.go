@@ -1,5 +1,4 @@
 // Thanks to https://github.com/uandiii/go-jwk-security
-
 package keycloak_jwks
 
 import (
