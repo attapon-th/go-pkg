@@ -65,7 +65,7 @@ func New(config ...Config) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		auth, err := t(c)
 		if err != nil {
-			cfg.ErrorHandler(c, err)
+			return cfg.ErrorHandler(c, err)
 		}
 		cfg.Claims = jwt.MapClaims{}
 
