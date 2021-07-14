@@ -1,37 +1,32 @@
-package mdatetime
+package dt
 
 import (
 	"fmt"
+	"strings"
 	"time"
 )
 
-const TimestampMillisLayout = "2006-01-02T15:04:05Z"
+type Timestamp time.Time
 
-type Mtimestamp time.Time
-
-func (m *Mtimestamp) UnmarshalJSON(b []byte) error {
-	var (
-		tt  time.Time
-		err error
-	)
-	if InLocalTimeZone {
-		tt, err = time.ParseInLocation(TimestampMillisLayout, string(b), time.Local)
-	} else {
-		tt, err = time.Parse(TimestampMillisLayout, string(b))
-	}
-	*m = Mtimestamp(tt)
+func (m *Timestamp) UnmarshalJSON(b []byte) error {
+	s := strings.Trim(string(b), `"`)
+	tt, err := time.ParseInLocation(TIMESTAMP_LAYOUT, s, time.Local)
+	*m = Timestamp(tt)
 	return err
 }
 
-func (ct Mtimestamp) MarshalJSON() ([]byte, error) {
+func (ct Timestamp) MarshalJSON() ([]byte, error) {
 	return []byte(ct.String()), nil
 }
 
-func (ct *Mtimestamp) String() string {
+func (ct *Timestamp) String() string {
 	t := time.Time(*ct)
-	return fmt.Sprintf("%q", t.Format(TimestampMillisLayout))
+	return fmt.Sprintf("%q", t.Format(TIMESTAMP_LAYOUT))
 }
 
-func (t Mtimestamp) GetTime() time.Time {
+func (t Timestamp) GetTime() time.Time {
 	return time.Time(t)
+}
+func (t *Timestamp) FromTime(ti time.Time) {
+	*t = Timestamp(ti)
 }
