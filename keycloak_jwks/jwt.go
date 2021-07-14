@@ -4,7 +4,6 @@ package keycloak_jwks
 import (
 	"errors"
 	"fmt"
-	"reflect"
 	"strings"
 
 	"github.com/attapon-th/go-pkg/keycloak_jwks/security"
@@ -13,9 +12,8 @@ import (
 )
 
 type Config struct {
-	JwksCertURL    string
-	KeyFunc        jwt.Keyfunc
-	Claims         jwt.Claims
+	JwksCertURL    string      // require
+	KeyFunc        jwt.Keyfunc // defualt: keyfunc
 	SuccessHandler fiber.Handler
 	ErrorHandler   fiber.ErrorHandler
 }
@@ -67,18 +65,8 @@ func New(config ...Config) fiber.Handler {
 		if err != nil {
 			return cfg.ErrorHandler(c, err)
 		}
-		cfg.Claims = jwt.MapClaims{}
-
 		var token = new(jwt.Token)
-
-		if _, ok := cfg.Claims.(jwt.MapClaims); ok {
-			token, err = jwt.Parse(auth, cfg.KeyFunc)
-		} else {
-			t := reflect.ValueOf(cfg.Claims).Type().Elem()
-			claims := reflect.New(t).Interface().(jwt.Claims)
-			token, err = jwt.ParseWithClaims(auth, claims, cfg.KeyFunc)
-		}
-
+		token, err = jwt.Parse(auth, cfg.KeyFunc)
 		if err == nil && token.Valid {
 			c.Locals("user", token)
 			return cfg.SuccessHandler(c)
