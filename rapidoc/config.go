@@ -44,9 +44,31 @@ func HtmlTemplateRapiDoc() string {
 	</head>
 	
 	<body>
-		<rapi-doc spec-url="{{$.SpecURL}}" heading-text="{{$.HeaderText}}" regular-font="Sarabun" mono-font="'Roboto Mono'" render-style="{{$.RenderStyle}}" nav-text-color="#aaa" nav-hover-text-color="#fff" nav-accent-color="#FF0000" primary-color="#3B5998" show-header="false" show-info="true" allow-authentication="true" theme="dark" allow-try="true" allow-search="false" allow-spec-url-load="false" allow-spec-file-load="false" header-color="#3B5998" schema-style="{{$.SchemaStyle}}">
+		<rapi-doc 
+		spec-url="{{$.SpecURL}}" 
+		heading-text="{{$.HeaderText}}" 
+		regular-font="Sarabun" 
+		mono-font="'Roboto Mono'" 
+		render-style="{{$.RenderStyle}}" 
+		bg-color="#ffffff" 
+		text-color="" 
+		nav-bg-color="#fafafa" 
+		nav-text-color="" 
+		nav-hover-bg-color="#ffebea" 
+		nav-hover-text-color="#9b0700" 
+		nav-accent-color="" 
+		primary-color="#F63C41" 
+		show-header="false" 
+		show-info="true" 
+		allow-authentication="true" 
+		theme="light"
+		allow-try="true" 
+		allow-search="true" 
+		allow-spec-url-load="false" 
+		allow-spec-file-load="false" 
+		schema-style="{{$.SchemaStyle}}">
 		<div slot="nav-logo" style="display: flex; align-items: center; justify-content: center;">
-			<img src="{{$.LogoURL}}" style="width:50px; margin-right: 20px">
+			<img src="{{$.LogoURL}}" style="width:150px">
 		</div>
 		</rapi-doc>
 	</body>
