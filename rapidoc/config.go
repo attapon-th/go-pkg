@@ -2,6 +2,7 @@ package rapidoc
 
 type RenderStyle string
 type SchemaStyle string
+type ThemeStyle string
 
 const (
 	RenderStyle_Read  RenderStyle = "read"
@@ -10,6 +11,9 @@ const (
 
 	SchemaStyle_Tree  SchemaStyle = "tree"
 	SchemaStyle_Table SchemaStyle = "table"
+
+	Theme_Dark  ThemeStyle = "dark"
+	Theme_Light ThemeStyle = "light"
 )
 
 type RapiDocConfig struct {
@@ -19,6 +23,7 @@ type RapiDocConfig struct {
 	LogoURL     string      `json:"logo_url,omitempty"`
 	RenderStyle RenderStyle `json:"render_style,omitempty"`
 	SchemaStyle SchemaStyle `json:"schema_style,omitempty"`
+	Theme       ThemeStyle  `json:"theme,omitempty"`
 }
 
 func GetDefaultRapiDocConfig() RapiDocConfig {
@@ -29,6 +34,7 @@ func GetDefaultRapiDocConfig() RapiDocConfig {
 		LogoURL:     "https://mrin9.github.io/RapiDoc/images/logo.png",
 		RenderStyle: RenderStyle_Read,
 		SchemaStyle: SchemaStyle_Tree,
+		Theme:       Theme_Dark,
 	}
 }
 
@@ -47,25 +53,10 @@ func HtmlTemplateRapiDoc() string {
 		<rapi-doc 
 		spec-url="{{$.SpecURL}}" 
 		heading-text="{{$.HeaderText}}" 
+		theme="{{$.Theme}}"
 		regular-font="Sarabun" 
 		mono-font="'Roboto Mono'" 
 		render-style="{{$.RenderStyle}}" 
-		bg-color="#ffffff" 
-		text-color="" 
-		nav-bg-color="#fafafa" 
-		nav-text-color="" 
-		nav-hover-bg-color="#ffebea" 
-		nav-hover-text-color="#9b0700" 
-		nav-accent-color="" 
-		primary-color="#F63C41" 
-		show-header="false" 
-		show-info="true" 
-		allow-authentication="true" 
-		theme="light"
-		allow-try="true" 
-		allow-search="true" 
-		allow-spec-url-load="false" 
-		allow-spec-file-load="false" 
 		schema-style="{{$.SchemaStyle}}">
 		<div slot="nav-logo" style="display: flex; align-items: center; justify-content: center;">
 			<img src="{{$.LogoURL}}" style="width:150px">

@@ -12,7 +12,7 @@ func main() {
 	app.Get("/rapidoc/*", rapidoc.New(rapidoc.Config{
 		Title:      "Pet Storage",
 		HeaderText: "API Pet",
-		SpecURL:    "swagger.json",
+		SpecURL:    "/rapidoc/openapi.yaml",
 		LogoURL:    "https://redocly.github.io/redoc/petstore-logo.png",
 	}))
 
